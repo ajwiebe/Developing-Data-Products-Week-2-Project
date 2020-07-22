@@ -1,0 +1,18 @@
+---
+title: "Developing Data Products Project 1"
+date: 07/22/20
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+## World Map with Some Capitals
+``` {r, message = F, warning = F}
+library(leaflet)
+
+cap_labels <- c("Canberra, Australia", "Belmopan, Belize", "Ottawa, Canada", "Cairo, Egypt", "Suva, Fiji", "Berlin, Germany", "New Delhi, India", "Bamako, Mali", "Abuja, Nigeria", "Hanoi, Viet Nam")
+latlngDF <- data.frame(lat = c(-35.15, 17.18, 45.27, 30.01, -18.06, 52.30, 28.37, 12.34, 9.05, 21.05), lng = c(149.08, -88.3, -75.42, 31.14, 178.3, 13.25, 77.13, -7.55, 7.32, 105.55), pop = c(395790, 13939, 994837, 9500000, 93970, 3769000, 21750000, 1810366, 3278000, 8054000), cont = as.factor(c("Oceania", "North America", "North America", "Africa", "Oceania", "Europe", "Asia", "Africa", "Africa", "Asia")))
+latlngDF$col <- c("blue", "orange", "orange", "red", "blue", "pink", "yellow", "red", "red", "yellow")
+latlngDF %>% leaflet() %>% addTiles() %>% addMarkers(popup = cap_labels) %>% addCircles(weight = 1, radius = sqrt(latlngDF$pop)*150, color = latlngDF$col)
+```
